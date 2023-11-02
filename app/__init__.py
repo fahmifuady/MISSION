@@ -1,11 +1,18 @@
 from flask import Flask, render_template, Response
-from keras.preprocessing.image import img_to_array
-from keras.models import load_model
-import numpy as np
-import cv2
-import os
-import cvlib as cv
+from app import view
 
 app = Flask(__name__)
 
-from app import routes
+@app.route('/')
+@app.route('/home')
+def home():
+    return view.home()
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(view.gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/newfeature',methods=['POST','GET'])
+def task():
+    return view.task()
+
