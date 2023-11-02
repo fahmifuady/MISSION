@@ -102,7 +102,7 @@
 			<div class="spotify-playlists">
 				<div class="vertical-flex">
 					<h2>Our New Feature</h2>
-					<div class="feature-container">
+					<div class="feature-container vertical-flex">
 						<div class="horizontal-flex">
 							<div class="vertical-flex">
 								<img src="../static/camera.png" width="64px" height="48px" />
@@ -111,6 +111,23 @@
 								<h4>MISSION (Music By Expression)</h4>
 								<p>Try out our new feature!</p>
 							</div>
+						</div>
+						<div>
+							<img src="{{ url_for('video_feed') }}" class="video-stream" />
+							<form method="post" action="{{ url_for('task') }}">
+								<input
+									type="submit"
+									value="Stop/Start"
+									name="stop"
+									class="feature-button"
+								/>
+								<input
+									type="submit"
+									value="capture"
+									name="click"
+									class="feature-button"
+								/>
+							</form>
 						</div>
 					</div>
 				</div>
