@@ -5,11 +5,12 @@ import cv2
 import os
 import cvlib as cv
 
-global capture, userface, prediction, switch
+global capture, userface, prediction, switch, camera
+camera = 0
 capture = 0
 userface = 0
 prediction = 0
-switch = 0 
+switch = 1
 
 camera = cv2.VideoCapture(0)
 emotion_model = tf.keras.models.load_model('app/static/model_cv.h5')
@@ -60,24 +61,26 @@ def gen_frames():
                 yield (b'--frame\r\n'
                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             except Exception as e:
+                print("Error nya itu " + e)
                 pass
         else:
             pass
 
 def task():
-    global capture, switch
+    global capture, switch, camera
     if request.method == 'POST':
         if request.form.get('click') == 'capture':
             capture = 1
 
-        if request.form.get('stop') == 'Stop/Start':
+        elif request.form.get('stop') == 'on/off':
             if (switch == 1):
                 switch == 0
                 camera.release()
-                cv2.destroyAllWindows()
+
             else:
                 camera = cv2.VideoCapture(0)
                 switch == 1
+
     elif request.method == 'GET':
         return render_template('ourfeature.html')
     return render_template('ourfeature.html')

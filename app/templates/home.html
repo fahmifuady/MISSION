@@ -92,17 +92,19 @@
       <div class="spotify-playlists">
         <div class="vertical-flex">
           <h2>Our New Feature</h2>
-          <div class="feature-container">
-            <div class="horizontal-flex">
-              <div class="vertical-flex">
-                <img src="../static/camera.png" width="64px" height="48px" />
-              </div>
-              <div class="vertical-flex">
-                <h4>MISSION (Music By Expression)</h4>
-                <p>Try out our new feature!</p>
+          <a href="{{ url_for('task') }}" class="hide_unerline">
+            <div class="feature-container pointer-on-hover">
+              <div class="horizontal-flex">
+                <div class="vertical-flex">
+                  <img src="../static/camera.png" width="64px" height="48px" />
+                </div>
+                <div class="vertical-flex">
+                  <h4>MISSION (Music By Expression)</h4>
+                  <p>Try out our new feature!</p>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 

@@ -20,7 +20,7 @@
       <div class="navigation">
         <ul>
           <li>
-            <a href="#">
+            <a href="{{ url_for('home') }}">
               <span class="fa fa-home"></span>
               <span>Home</span>
             </a>
@@ -107,7 +107,7 @@
               <form method="post" action="{{ url_for('task') }}">
                 <input
                   type="submit"
-                  value="Stop/Start"
+                  value="on/off"
                   name="stop"
                   class="feature-button"
                 />
