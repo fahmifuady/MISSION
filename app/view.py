@@ -14,31 +14,32 @@ switch = 1
 
 camera = cv2.VideoCapture(0)
 emotion_model = tf.keras.models.load_model('app/static/model_cv.h5')
-face_model = cv2.dnn.readNetFromCaffe('app/static/deploy.prototxt.txt', 'app/static/res10_300x300_ssd_iter_140000.caffemodel')
+face_cascade=cv2.CascadeClassifier('app/static/haarcascade_frontalface_default.xml')
+# face_model = cv2.dnn.readNetFromCaffe('app/static/deploy.prototxt.txt', 'app/static/res10_300x300_ssd_iter_140000.caffemodel')
 
-def detect_face(frame):
-    global face_model
-    (h, w) = frame.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,
-        (300, 300), (104.0, 177.0, 123.0))   
-    face_model.setInput(blob)
-    detections = face_model.forward()
-    confidence = detections[0, 0, 0, 2]
+# def detect_face(frame):
+#     global face_model
+#     (h, w) = frame.shape[:2]
+#     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,
+#         (300, 300), (104.0, 177.0, 123.0))   
+#     face_model.setInput(blob)
+#     detections = face_model.forward()
+#     confidence = detections[0, 0, 0, 2]
 
-    if confidence < 0.5:            
-            return frame           
+#     if confidence < 0.5:            
+#             return frame           
 
-    box = detections[0, 0, 0, 3:7] * np.array([w, h, w, h])
-    (startX, startY, endX, endY) = box.astype("int")
-    try:
-        frame=frame[startY:endY, startX:endX]
-        (h, w) = frame.shape[:2]
-        r = 480 / float(h)
-        dim = ( int(w * r), 480)
-        frame=cv2.resize(frame,dim)
-    except Exception as e:
-        pass
-    return frame
+#     box = detections[0, 0, 0, 3:7] * np.array([w, h, w, h])
+#     (startX, startY, endX, endY) = box.astype("int")
+#     try:
+#         frame=frame[startY:endY, startX:endX]
+#         (h, w) = frame.shape[:2]
+#         r = 480 / float(h)
+#         dim = ( int(w * r), 480)
+#         frame=cv2.resize(frame,dim)
+#     except Exception as e:
+#         pass
+#     return frame
 
 def gen_frames():
     global capture, userface, prediction
@@ -48,7 +49,7 @@ def gen_frames():
             # take picture to predict emotion
             if capture:
                 capture = 0
-                userface = detect_face(frame)
+                # userface = detect_face(frame)
                 userface = cv2.resize(userface, (244,244))
                 prediction = np.expand_dims(userface, axis=4)
                 prediction = emotion_model.predict(prediction)
